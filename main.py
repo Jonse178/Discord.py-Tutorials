@@ -1,9 +1,9 @@
-#Welcome to Episode 3!
-#Introduction to commands!
+#Welcome to Episode 4!
+#Learn how to use Embeds!
 import os
 import discord#pip install discord
 from discord.ext import commands
-from keep_alive import keep_alive#import the webserver file
+from keep_alive import keep_alive
 
 bot = commands.Bot(  command_prefix = '!'#Set the command_prefix
                     ,case_insensitive=True#Make commands case insensitive
@@ -13,29 +13,26 @@ bot = commands.Bot(  command_prefix = '!'#Set the command_prefix
 @bot.event
 async def on_ready():
   print(f"Logged in as {bot.user.name} - {bot.user.id}")
-
-@bot.event
-async def on_message(message):
-  if message.content.startswith('hello'):#when we send hello
-    await message.channel.send(f'Hello I am `{bot.user.name}`')#bot replies with this
-  elif message.content.startswith('invite'):
-    await message.channel.send(f'https://discord.com/api/oauth2/authorize?client_id={bot.user.id}&permissions=0&scope=bot')#bot's invite from developer portal
-
-  await bot.process_commands(message)#This fixes the bug
-
-#I forgot to mention when using on_message with commands there is a small bug. The on_message stops the commands.
 bot.remove_command('help')#removes the default help command
 
 @bot.command()
 async def hello(ctx):
-  await ctx.send('Hi')  
+  embed = discord.Embed(title = f'Hello {ctx.author.name}',description = f"I am {bot.user.name}!\nI am a bot created by Jonse for the new Discord.py Yotube Tutorial Series!",color = discord.Color.blue())
+
+  await ctx.send(embed=embed) 
 
 @bot.command()
 async def help(ctx):
-  await ctx.send(f"{bot.user.name}'s Commands!\nHelp - Shows this message\nHello - Bot says Hello Back!")
+  help_em = discord.Embed(description=f"{bot.user.name}'s Commands!\nHelp - Shows this message\nHello - Bot says Hello Back!",color = discord.Color.blurple())#only can have these 3 parameters, title,description and color
+
+  await ctx.send(embed=help_em)#for embed it is same as sending a message but you need to include embed= follow by the variable you assigned for your embed message
+
+
 
 token = os.getenv('token')
-keep_alive()#call the webserver function
-bot.run(token)#run the bot
+keep_alive()
+bot.run(token)
 
-#Next episode I will teach on Embeds
+#Right now all the commands are Basic and not really useful
+#Thanks for watching see you in next episode!
+#:D
